@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # LVGL on top of Linux graphics stack
 
 This is an example project demonstrating how to use LVGL on
@@ -146,3 +147,6 @@ sudo adduser $USER video
 newgrp video
 ./build/bin/lvglsim
 ```
+=======
+# -lvgl-deepseek-
+>>>>>>> 981d9a5f337de8f836711c48c0e6a1829f372cd9
