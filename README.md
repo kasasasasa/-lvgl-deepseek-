@@ -13,6 +13,10 @@ make -j12
 make clean
 //修改了配置文件才需要，删掉编译生成的所有文件
 ```
+### 将bulb.gif上传至开发板
+```
+scp bulb.gif root@192.168.208.87 /root/
+```
 ### 将编译后的文件上传至开发板（WIFI传输），获取IP后通过SSH协议登录
 ```
 scp main root@192.168.208.87 /root/
