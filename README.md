@@ -1,152 +1,35 @@
-<<<<<<< HEAD
-# LVGL on top of Linux graphics stack
-
-This is an example project demonstrating how to use LVGL on
-a GNU/Linux systems and other Unix-like operating systems
-
-LVGL provides drivers for many graphics backends.
-Legacy framebuffer (fbdev), modern DRM/KMS, Wayland, X11, GLFW3 and SDL2.
-
-Check out this blog post for a step by step tutorial for fbdev
-https://blog.lvgl.io/2018-01-03/linux_fb
-
-## Clone the project
-
-Clone the project
-
+### 开启ollama服务器
 ```
-git clone https://github.com/lvgl/lv_port_linux.git
-cd lv_port_linux/
+ollama  serve
 ```
-
-LVGL is a submodule of `lv_port_linux`, use the following command
-to fetch it, it will be downloaded to the `lvgl/` directory
-
+### 下载deepseek模型
 ```
-git submodule update --init --recursive
+ollama run deepseek-r1:1.5b
 ```
-
-## Configure drivers and libraries
-
-Adjust `lv_conf.h` to select the drivers and libraries that will be compiled by
-modifying the following definitions, setting them to `1` or `0`
-
-### Graphics drivers
-
-| Definition         | Description                             |
-| ------------------ | ----------------------------------------|
-| LV_USE_LINUX_FBDEV | Legacy frame buffer (/dev/fb*)          |
-| LV_USE_LINUX_DRM   | DRM/KMS (/dev/dri/*)                    |
-| LV_USE_SDL         | SDL                                     |
-| LV_USE_WAYLAND     | WAYLAND                                 |
-| LV_USE_X11         | X11                                     |
-| LV_USE_GLFW        | GLFW3                                   |
-
-### Device drivers
-
-| Definition         | Description                             |
-| ------------------ | ----------------------------------------|
-| LV_USE_EVDEV       | libevdev input devices                  |
-
-## Install dependencies
-
-Be sure to install the required dependencies for the selected drivers by checking
-the documentation for each driver here:
-https://docs.lvgl.io/master/details/integration/driver/
-
-You can also check the [Dockerfiles](docker/) to get the names
-of the packages for various distributions
-
-## Build instructions
-
-LVGL supports GNU make and CMake
-
-### CMake
-
+### 进行交叉编译和清理build文件夹
 ```
-cmake -B build -S .
-make -C build -j
+make -j12
+//-j12意味着开12条线程一起编译会更快根据电脑情况可加减数字
+make clean
+//修改了配置文件才需要，删掉编译生成的所有文件
 ```
-
-### GNU make
-
+### 将编译后的文件上传至开发板（WIFI传输），获取IP后通过SSH协议登录
 ```
-make -j
+scp main root@192.168.208.87 /root/
+ssh root@192.168.208.87
 ```
-
-Cross compilation is supported with CMake, edit the `user_cross_compile_setup.cmake`
-to set the location of the compiler toolchain and build using the commands below
-
-```
-cmake -DCMAKE_TOOLCHAIN_FILE=./user_cross_compile_setup.cmake -B build -S .
-make  -C build -j
-```
-
-### Installing LVGL
-
-It is possible to install LVGL to your system however, this is currently only
-supported with cmake.
-
-```
-cmake --install ./build
-```
-
-## Run the demo application
-
-```
-./build/bin/lvglsim
-```
-This will start the widgets demo
-
-If multiple backends are enabled you can run with a specific backend via the `-b` option
-
-```
-./build/bin/lvglsim -b sdl
-```
-
-To get a list of supported backends use the `-B` option
-
-
-## Environment variables
-
-Environment variables can be set to modify the behavior of the driver(s)
-Check the documentation of the drivers for more details
-
-
-### Legacy framebuffer (fbdev)
-
-- `LV_LINUX_FBDEV_DEVICE` - override default (`/dev/fb0`) framebuffer device node.
-
-
-### EVDEV touchscreen/mouse pointer device
-
-- `LV_LINUX_EVDEV_POINTER_DEVICE` - the path of the input device, i.e.
-  `/dev/input/by-id/my-mouse-or-touchscreen`. If not set, devices will
-  be discovered and added automatically.
-
-### DRM/KMS
-
-- `LV_LINUX_DRM_CARD` - override default (`/dev/dri/card0`) card.
-
-### Simulator
-
-- `LV_SIM_WINDOW_WIDTH` - width of the window (default `800`).
-- `LV_SIM_WINDOW_HEIGHT` - height of the window (default `480`).
-
-
-## Permissions
-
-When using fbdev or DRM, run lvglsim with `sudo` or `su`,
-Usually, unpriviledged users don't have access to the framebuffer device `/dev/fb0`
-`sudo` or `su` must be used.
-
-Access to the framebuffer device can be granted by adding the unpriviledged user to the `video` group
-
-```
-sudo adduser $USER video
-newgrp video
-./build/bin/lvglsim
-```
-=======
-# -lvgl-deepseek-
->>>>>>> 981d9a5f337de8f836711c48c0e6a1829f372cd9
+### 主要功能页面展示
+#### 开机动画
+<img width="732" height="402" alt="image" src="https://github.com/user-attachments/assets/97baa506-fc42-467d-9986-0db98dde5d37" />
+#### 登录页面
+<img width="732" height="422" alt="image" src="https://github.com/user-attachments/assets/87c67d86-434e-4b94-b1d3-4180296e4392" />
+#### 注册页面
+<img width="733" height="400" alt="image" src="https://github.com/user-attachments/assets/a8e5ae30-a628-4d09-8443-35141c04c0ee" />
+#### 忘记密码
+<img width="732" height="442" alt="image" src="https://github.com/user-attachments/assets/d1f31dba-4e01-4935-bb91-e20b23e41a24" />
+#### deepseek对话页面
+<img width="732" height="416" alt="image" src="https://github.com/user-attachments/assets/22273ef5-ee2a-45ca-810c-4befa695c325" />
+#### 双人打地鼠页面
+<img width="732" height="395" alt="image" src="https://github.com/user-attachments/assets/97e89ac8-0825-42fe-8a7e-ec6d97af0d0e" />
+#### 2048页面
+<img width="731" height="413" alt="image" src="https://github.com/user-attachments/assets/11e61136-6d43-4aee-a082-f55bc4ae3b54" />
